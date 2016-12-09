@@ -32,3 +32,6 @@ Same as trafficcop, this should work on any device that uses `br-lan` as its LAN
 
 * ipkg package
 * reimplement per IP qos as trafficcop
+* Add more netem features: duplicate, corrupt, reorder 
+
+Refer: https://calomel.org/network_loss_emulation.html
