@@ -1,5 +1,5 @@
 # openwrt-traffic-emulator
-OpenWRT traffic emulator frontend
+OpenWRT traffic emulator with bootstrap frontend
 
 ![Demo](traffic-emulator.png)
 
@@ -23,3 +23,7 @@ Same as trafficcop, this should work on any device that uses `br-lan` as its LAN
 * On openwrt shell: install uhttpd, tc and kernel module: kmod-sched-core
 * Clone repo and migrate traffic, reset to /www/cgi-bin 
 
+### Todo
+
+* ipkg package
+* reimplement per IP qos as trafficcop
