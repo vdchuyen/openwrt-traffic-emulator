@@ -6,7 +6,7 @@ OpenWRT traffic emulator with bootstrap frontend
 These little scripts will provide a frontend to emulate network condition for mobile app testing. The backend cgi use tc qdisc netem to setup Traffic sharping condition for limit bandwidth, loss and latency.
 Inspired by this package: https://github.com/shuhaowu/trafficcop
 
-But the trafficcop package does not work on TP-link MR3020 device and provide no custom input for loss, latency and bandwidth so this script provide simple method.
+But the trafficcop package does not work on TP-link MR3020 device and provide no custom input for loss, latency and bandwidth so this script provide more simple method.
 
 ###Features:
 
