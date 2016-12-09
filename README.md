@@ -26,7 +26,8 @@ Same as trafficcop, this should work on any device that uses `br-lan` as its LAN
 ### How to setup
 
 * On openwrt shell: install uhttpd, tc and kernel module: kmod-sched-core
-* Clone repo and migrate traffic, reset to /www/cgi-bin 
+* opkg update, opkg install tc uhttpd kmod-sched-core
+* Clone repo and move traffic, reset to /www/cgi-bin 
 
 ### Todo
 
