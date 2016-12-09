@@ -1,0 +1,76 @@
+#!/bin/sh
+
+tc qdisc del dev br-lan root
+
+echo "Content-type: text/html"
+echo ""
+
+
+cat << 'EOF'
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Traffic Emulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+
+  </head>
+  <body>
+
+<form name="traffic-emulator" class="form-horizontal" method="post" action="/cgi-bin/reset" onsubmit="return validateForm()">
+<fieldset>
+
+<legend>Traffic Emulator</legend>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="loss">Loss</label>  
+  <div class="col-md-2">
+  <input id="loss" name="loss" type="text" placeholder="%" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="bw">Bandwidth</label>
+  <div class="col-md-2">
+    <input id="bw" name="bw" type="text" placeholder="KBs" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="latency">Latency</label>  
+  <div class="col-md-2">
+  <input id="latency" name="latency" type="text" placeholder="value + us/ms/s" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+<label class="col-md-4 control-label" for="button1id"></label>
+  <div class="action-buttons">
+  <button  id="emulate" name="emulate" class="btn btn-danger">Emulate</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<footer>
+</footer>
+<script>
+function validateForm() {
+    var x = document.forms["traffic-emulator"]["loss"].value;
+    var y = document.forms["traffic-emulator"]["bw"].value;
+    var z = document.forms["traffic-emulator"]["latency"].value;
+    if ((isNaN(x) || x == "") && (isNaN(y) || y == "") && (z == "")){
+        alert("Joking lah?, fill loss or latency, dude");
+        return false;
+    }
+}
+</script>
+</body>
+</html>
+EOF

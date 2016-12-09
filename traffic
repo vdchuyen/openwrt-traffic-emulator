@@ -1,0 +1,85 @@
+#!/bin/sh
+echo "Content-type: text/html"
+echo ""
+
+read QUERY_STRING
+eval $(echo "$QUERY_STRING"|awk -F'&' '{for(i=1;i<=NF;i++){print $i}}')
+bw=`uhttpd -d $bw`
+latency=`uhttpd -d $latency`
+loss=`uhttpd -d $loss`
+
+if test "$loss" = ""; then
+tc qdisc add dev br-lan root netem limit $bw
+tc qdisc add dev br-lan root netem limit $bw delay $latency 
+else
+tc qdisc add dev br-lan root netem limit $bw delay $latency loss $loss
+fi
+
+if test "$latency" = ""; then
+tc qdisc add dev br-lan root netem limit $bw 
+else
+tc qdisc add dev br-lan root netem limit $bw delay $latency loss $loss
+fi
+
+
+cat << 'EOF'
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Traffic Emulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+  </head>
+  <body>
+
+<form class="form-horizontal" method="post" action="/cgi-bin/traffic"> 
+<fieldset>
+
+<!-- Form Name -->
+<legend>Traffic Emulator</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="loss">Loss</label>  
+  <div class="col-md-2">
+  <input id="loss" name="loss" type="text" placeholder="%" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="bw">Bandwidth</label>
+  <div class="col-md-2">
+    <input id="bw" name="bw" type="text" placeholder="KBs" class="form-control input-md">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="latency">Latency</label>  
+  <div class="col-md-2">
+  <input id="latency" name="latency" type="text" placeholder="ms" class="form-control input-md">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="button1id"></label>
+  <div class="action-buttons">
+    <button id="reset" name="reset" class="btn btn-success">Reset to Normal</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+<footer>
+</footer>
+
+</body>
+</html>
+EOF
